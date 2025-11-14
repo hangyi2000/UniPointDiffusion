@@ -1,0 +1,68 @@
+point_cloud_range: &point_cloud_range [-1.0, -1.0, -1.0, 1.0, 1.0, 1.0]
+
+dataset:
+  target: pcld.data.point_cloud_module.PointCloudDataModule
+  params:
+    dataset_name: "shapenet"
+    dataset_folder: "/path/to/data/"
+    split_folder: "./configs/data/shapenet"
+    pc_size: 2048
+    surface_sampling: true
+
+    batch_size: 16
+    num_workers: 4
+
+    transform:
+      AxisScale:
+        target: pcld.data.transforms.AxisScale
+        params:
+          interval: [ 0.75, 1.25 ]
+          jitter: true
+
+model:
+  target: pcld.models.pcl_vae_v1.PointLatentKLModel
+  params:
+    dim: 768
+    num_centers: 1024
+    num_freqs: 8
+    mask_ratio: 0.15
+    encoder_cfg:
+      top_k: 32
+      hidden_dim: 256
+      feat_dim: 0
+      depth: 6
+      heads: 6
+      mlp_dim: 1024
+      dim_head: 64
+      attn_drop_prob: 0.0
+      proj_drop_prob: 0.0
+      drop_path_prob: 0.1
+
+    decoder_cfg:
+      depth: 8
+      heads: 6
+      mlp_dim: 1024
+      dim_head: 64
+      attn_drop_prob: 0.0
+      proj_drop_prob: 0.0
+      drop_path_prob: 0.1
+
+    loss_cfg:
+      target: pcld.modules.losses.klrecdisc.KLChamferDistance
+      params:
+        kl_weight: 1.0e-5
+
+    scheduler_cfg:
+      target: pcld.lr_scheduler.LambdaLinearScheduler
+      params:
+        warm_up_steps: [ 10000 ]
+        cycle_lengths: [ 10000000000000 ]
+        f_start: [ 1.e-6 ]
+        f_max: [ 1. ]
+        f_min: [ 1. ]
+
+logger:
+  target: pcld.utils.callbacks.PointVAELogger
+  params:
+    step_frequency: 2000
+    num_samples: 4

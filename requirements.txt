@@ -1,0 +1,43 @@
+# cuda 10.2
+## pip3 install torch torchvision
+
+# cuda 11.6
+## pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116 --no-cache-dir
+
+# torch~=1.12.1
+# torchvision~=0.13.1
+ipdb~=0.13.9
+ipython
+cython
+ninja
+# pytorch-lightning~=1.8.1
+pytorch-lightning~=1.7.7
+omegaconf~=2.2.3
+einops~=0.4.1
+wandb~=0.13.2
+tensorboard~=2.10.0
+
+## cuda 11.6
+# pip install torch-scatter -f https://data.pyg.org/whl/torch-1.12.1+cu116.html
+# torch_cluster~=1.6.0
+# torch_scatter~=2.1.0
+transformers~=4.24.0
+diffusers~=0.11.1
+trimesh~=3.18.2
+shapely~=2.0.1
+# pysdf~=0.1.8
+scikit-image~=0.19.3
+pandas~=1.4.4
+# mesh2sdf~=1.1.0
+tqdm~=4.64.0
+numpy~=1.23.1
+Pillow~=9.2.0
+setuptools~=63.4.1
+packaging~=21.3
+ipywidgets~=8.0.2
+matplotlib~=3.6.1
+pythreejs
+# git+https://github.com/pyvista/fast-simplification.git
+# git+https://github.com/skoch9/meshplot.git
+# git+https://github.com/NVlabs/nvdiffrast/
+# -e .
